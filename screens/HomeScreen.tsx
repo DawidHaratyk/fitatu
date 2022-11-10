@@ -1,5 +1,10 @@
 import React from 'react'
+import { Header } from '../components/Header/Header'
 
 export function HomeScreen() {
-  return <div>HomeScreen</div>
+  return (
+    <>
+      <Header />
+    </>
+  )
 }
