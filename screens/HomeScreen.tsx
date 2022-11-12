@@ -1,13 +1,14 @@
-import React from "react";
-import { Header } from "../components/Header/Header";
-import { AllMealsWrapper } from "../components/AllMealsWrapper/AllMealsWrapper";
-import { Button, Text } from "react-native";
+import React from 'react'
+import { AllMealsWrapper } from '../components/AllMealsWrapper/AllMealsWrapper'
+import { CaloriesController } from '../components/CaloriesController/CaloriesController'
+import { Header } from '../components/Header/Header'
 
-export function HomeScreen({ navigation }: any) {
+export function HomeScreen() {
   return (
     <>
       <Header />
       <AllMealsWrapper />
+      <CaloriesController />
     </>
-  );
+  )
 }
