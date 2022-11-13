@@ -1,50 +1,91 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { MealWrapper } from '../MealWrapper/MealWrapper'
-import { windowHeight } from '../../constants'
+import { StyleSheet, ScrollView } from "react-native";
+import React from "react";
+import { MealWrapper } from "../MealWrapper/MealWrapper";
 
 const mealsData = [
   {
-    title: 'Śniadanie',
+    title: "Śniadanie",
     calories: 0,
     products: [
       {
-        name: 'Pomidor',
+        name: "Pomidor",
         amount: 2,
         calories: 120,
         protein: 1.3,
         fat: 14,
         carbohydrates: 120,
+        id: 1,
       },
       {
-        name: 'Pomidor',
+        name: "Pomidor",
         amount: 2,
         calories: 120,
         protein: 1.3,
         fat: 14,
         carbohydrates: 120,
+        id: 2,
       },
     ],
   },
   {
-    title: 'Obiad',
+    title: "Obiad",
     calories: 0,
+    products: [
+      {
+        name: "Pomidor",
+        amount: 2,
+        calories: 120,
+        protein: 1.3,
+        fat: 14,
+        carbohydrates: 120,
+        id: 1,
+      },
+    ],
   },
   {
-    title: 'Kolacja',
+    title: "Kolacja",
     calories: 0,
+    products: [
+      {
+        name: "Pomidor",
+        amount: 2,
+        calories: 120,
+        protein: 1.3,
+        fat: 14,
+        carbohydrates: 120,
+        id: 1,
+      },
+      {
+        name: "Pomidor",
+        amount: 2,
+        calories: 120,
+        protein: 1.3,
+        fat: 14,
+        carbohydrates: 120,
+        id: 2,
+      },
+    ],
   },
-]
+];
 
 export const AllMealsWrapper = () => {
-  const mealsWrappersList = mealsData.map((meal) => <MealWrapper {...meal} />)
+  const mealsWrappersList = mealsData.map((meal) => (
+    <MealWrapper {...meal} key={meal.title} />
+  ));
 
-  return <View style={styles.allMealsWrapper}>{mealsWrappersList}</View>
-}
+  return (
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={styles.allMealsWrapper}
+    >
+      {mealsWrappersList}
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
   allMealsWrapper: {
     marginVertical: 25,
-    marginHorizontal: 15,
+    // marginHorizontal: 15,
   },
-})
+});

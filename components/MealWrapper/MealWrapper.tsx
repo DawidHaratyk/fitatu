@@ -1,31 +1,46 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import { windowWidth } from '../../constants'
-import { Ionicons } from '@expo/vector-icons'
-import { AntDesign } from '@expo/vector-icons'
-import { ProductProps } from '../../types'
-import { SelectedProduct } from '../SelectedProduct/SelectedProduct'
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import React, { useState } from "react";
+import { windowWidth } from "../../constants";
+import { Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { ProductProps } from "../../types";
+import { Products } from "../Products/Products";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 interface MealProps {
-  title: string
-  calories: number
-  products?: ProductProps[]
+  title: string;
+  calories: number;
+  products: ProductProps[];
 }
 
 export const MealWrapper = ({ title, calories, products }: MealProps) => {
-  const [areProductsVisible, setAreProductsVisible] = useState(false)
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+
+  const [areProductsVisible, setAreProductsVisible] = useState(false);
 
   const currentArrowIcon = areProductsVisible ? (
     <AntDesign name="up" size={24} color="black" />
   ) : (
     <AntDesign name="down" size={24} color="black" />
-  )
+  );
 
   const handleToggleProductsVisibility = () =>
-    setAreProductsVisible((prevState) => !prevState)
+    setAreProductsVisible((prevState) => !prevState);
+
+  const handleGoToAddProductsScreen = () =>
+    navigation.navigate("AddProductsScreen", {
+      title,
+    });
 
   return (
-    <>
+    <View style={styles.mealAndProductsContainer}>
       <View style={styles.mealWrapper}>
         <View style={styles.leftSideContainer}>
           <View style={styles.mealNameContainer}>
@@ -37,50 +52,49 @@ export const MealWrapper = ({ title, calories, products }: MealProps) => {
             {currentArrowIcon}
           </Pressable>
         </View>
-        <View style={styles.addProductButton}>
+        <TouchableOpacity
+          style={styles.addProductButton}
+          onPress={handleGoToAddProductsScreen}
+        >
           <Ionicons name="add" size={32} color="white" />
-        </View>
+        </TouchableOpacity>
       </View>
-      <View style={{ display: areProductsVisible ? 'flex' : 'none' }}>
-        {products?.map((product) => (
-          <SelectedProduct {...product} />
-        ))}
-      </View>
-    </>
-  )
-}
+      <Products products={products} areProductsVisible={areProductsVisible} />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   mealWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: windowWidth - 30,
-    marginBottom: 25,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: windowWidth,
+    marginBottom: 10,
+    paddingHorizontal: 15,
   },
   addProductButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#bae0af',
-  },
-  addProductIcon: {
-    color: 'white',
-    fontSize: 40,
+    backgroundColor: "#bae0af",
   },
   mealTitle: {
-    fontWeight: '700',
+    fontWeight: "700",
     fontSize: 20,
   },
   mealCalories: {
-    color: 'gray',
+    color: "gray",
   },
   leftSideContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   mealNameContainer: {
     marginRight: 10,
   },
-})
+  mealAndProductsContainer: {
+    marginBottom: 10,
+  },
+});
