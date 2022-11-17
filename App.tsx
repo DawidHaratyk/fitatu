@@ -6,6 +6,10 @@ import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AddProductsScreen } from "./screens/Root/AddProductsScreen";
 import { Root } from "./screens/Root/Root";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Text } from "react-native";
+
+const queryClient = new QueryClient();
 
 // type RootStackParamList = {
 //   Home: { navigator: string };
@@ -16,34 +20,47 @@ export const Tab = createBottomTabNavigator();
 export default function App() {
   // dlaczego Tab.Navigator nie działa
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          tabBarStyle: { backgroundColor: "black" },
-          tabBarLabelStyle: { color: "white" },
-          headerShown: false,
-        }}
-      >
-        <Tab.Screen
-          name="Home"
-          component={Root}
-          options={{
-            tabBarIcon: () => (
-              <FontAwesome name="home" size={24} color="white" />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Test"
-          component={Test}
-          options={{
-            tabBarIcon: () => (
-              <MaterialIcons name="fastfood" size={24} color="white" />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        <Tab.Navigator
+          initialRouteName="Home"
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ color, size }) => {
+              if (route.name === "Home") {
+                return <FontAwesome name="home" size={size} color={color} />;
+              } else if (route.name === "Test") {
+                return (
+                  <MaterialIcons name="fastfood" size={size} color={color} />
+                );
+              }
+            },
+            tabBarStyle: { backgroundColor: "black" },
+            tabBarLabelStyle: { color: "white" },
+            headerShown: false,
+            tabBarActiveTintColor: "gray",
+            tabBarInactiveTintColor: "white",
+          })}
+        >
+          <Tab.Screen
+            name="Home"
+            component={Root}
+            options={{
+              tabBarLabel: ({ color }) => (
+                <Text style={{ color, fontSize: 12 }}>Home</Text>
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Test"
+            component={Test}
+            options={{
+              tabBarLabel: ({ color }) => (
+                <Text style={{ color, fontSize: 12 }}>Test</Text>
+              ),
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </QueryClientProvider>
   );
 }

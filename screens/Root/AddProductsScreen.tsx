@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, TextInput } from "react-native";
-import { ProductsInStock } from "../../components/ProductsInStock/ProductsInStock";
+import ProductsInStock from "../../components/ProductsInStock/ProductsInStock";
 import { windowWidth } from "../../constants";
 
 export function AddProductsScreen() {
+  const [searchValue, setSearchValue] = useState("");
+
   return (
     <View style={styles.addProductsScreenContainer}>
-      <TextInput placeholder="Wpisz nazwę" style={styles.productsInput} />
-      <ProductsInStock />
+      <TextInput
+        value={searchValue}
+        onChangeText={(text) => setSearchValue(text)}
+        placeholder="Wpisz nazwę"
+        style={styles.productsInput}
+      />
+      <ProductsInStock searchValue={searchValue} />
     </View>
   );
 }

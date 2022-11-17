@@ -4,9 +4,7 @@ import { AllMealsWrapper } from "../../components/AllMealsWrapper/AllMealsWrappe
 import { CaloriesController } from "../../components/CaloriesController/CaloriesController";
 import { Header } from "../../components/Header/Header";
 
-export function HomeScreen({ navigation }: any) {
-  console.log(navigation);
-
+export function HomeScreen() {
   return (
     <>
       <Header />
